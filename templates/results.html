@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Recommendations</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #3a1c71, #d76d77);
+            text-align: center;
+            padding: 40px;
+            color: #f0f0f0;
+            background-attachment: fixed;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(15px);
+            animation: fadeIn 1.2s ease-in-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), transparent);
+            transform-origin: center;
+            transform: rotate(-60deg);
+            pointer-events: none;
+            animation: shine 5s linear infinite;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            color: #e0e0e0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            animation: slideIn 1.2s ease-in-out;
+        }
+
+        .job {
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 30px;
+            margin: 20px 0;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .job h2 {
+            color: #ffeb3b;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+        }
+
+        .job p {
+            color: #d0d0d0;
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+
+        .btn-container {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #ff6ec4, #ff4081);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            cursor: pointer;
+            border-radius: 35px;
+            text-decoration: none;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: box-shadow 0.3s;
+        }
+
+        .logout-btn {
+            background: linear-gradient(135deg, #e53935, #b71c1c);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes shine {
+            0% { transform: rotate(-60deg); }
+            100% { transform: rotate(300deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Recommended Jobs</h1>
+
+        {% if jobs %}
+            {% for job in jobs %}
+                <div class="job">
+                    <h2>{{ job.title }}</h2>
+                    <p><strong>Description:</strong> {{ job.description }}</p>
+                    <p><strong>Salary Range:</strong> {{ job.salary_range }}</p>
+                    <p><strong>Recommended Certifications:</strong> {{ job.certifications if job.certifications else "No Certifications Recommended" }}</p>                  
+                    <p><strong>Match Score:</strong> {{ job.score | round(2) }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No job matches found.</p>
+        {% endif %}
+
+        <div class="btn-container">
+            <a href="{{ url_for('index') }}" class="btn">🔄 Upload Again</a>
+            <a href="{{ url_for('logout') }}" class="btn logout-btn">🚪 Logout</a>
+        </div>
+    </div>
+</body>
+</html>

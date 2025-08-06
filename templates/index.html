@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Powered Job Recommendation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #2c3e50; /* Darker background */
+            color: #ecf0f1; /* Light grey text */
+            text-align: center;
+            overflow: hidden;
+            background-attachment: fixed;
+        }
+
+        .container {
+            background: rgba(52, 73, 94, 0.8); /* Darker container background */
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3); /* More pronounced shadow */
+            backdrop-filter: blur(10px);
+            animation: fadeIn 1.2s ease-in-out;
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        h1 {
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            color: #ecf0f1;
+            animation: slideIn 1.2s ease-in-out;
+        }
+
+        p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            color: #bdc3c7; /* Lighter grey text */
+            line-height: 1.6;
+        }
+
+        .custom-file-upload {
+            display: inline-block;
+            padding: 14px 28px;
+            background: #3498db;
+            color: white;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .custom-file-upload:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        button {
+            margin-top: 30px;
+            background: #2ecc71;
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            font-size: 1em;
+            cursor: pointer;
+            border-radius: 30px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .error {
+            color: #e74c3c;
+            margin-top: 15px;
+            font-weight: 500;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AI-Powered Job Matcher</h1>
+        <p>Unlock your career potential with intelligent job recommendations tailored to your skills and experience.</p>
+        
+        <form action="/resume" method="POST" enctype="multipart/form-data">
+            <label class="custom-file-upload">
+                <input type="file" name="resume" accept=".pdf" required onchange="updateFileName(this)">
+                <span id="file-label">Upload Your Resume</span>
+            </label>
+            <button type="submit">Discover Your Matches</button>
+        </form>
+
+        {% if message %}
+        <p class="error">{{ message }}</p>
+        {% endif %}
+    </div>
+
+    <script>
+        function updateFileName(input) {
+            document.getElementById("file-label").innerText = input.files[0].name;
+        }
+    </script>
+</body>
+</html>
