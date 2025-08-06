@@ -12,7 +12,7 @@ Supports uploading resumes, matching skills, and recommending job listings.
 - Skill-based job matching using BERT
 - SQLite database for jobs
 - Match visualization and ranked results
-- 
+  
  🧠 Tech Stack
 - Python 🐍
 - Flask 🌐
